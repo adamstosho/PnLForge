@@ -73,7 +73,8 @@ export async function POST(request: Request) {
 
         // Step 3: Verify on-chain activity for legitimacy
         try {
-            const connection = new Connection(clusterApiUrl('mainnet-beta'), 'confirmed')
+            const rpcUrl = process.env.SOLANA_RPC_URL || 'https://api.devnet.solana.com'
+            const connection = new Connection(rpcUrl, 'confirmed')
             const pubkey = new PublicKey(walletAddress)
             const signatures = await connection.getSignaturesForAddress(pubkey, { limit: 1 })
 
