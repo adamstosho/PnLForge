@@ -11,24 +11,36 @@ export const dynamic = 'force-dynamic'
 export async function POST(request: Request) {
     try {
         const authHeader = request.headers.get('authorization')
-        if (!authHeader?.startsWith('Bearer ')) {
+        let walletAddress = ''
+        let userId = ''
+
+        // Optional authentication - allow demo mode without token
+        if (authHeader?.startsWith('Bearer ')) {
+            const token = authHeader.slice(7)
+            const { walletAddress: tokenWallet, userId: tokenUserId, valid } = verifyJWT(token)
+            if (valid) {
+                walletAddress = tokenWallet
+                userId = tokenUserId
+            }
+        }
+
+        // Get wallet from request body
+        const { walletAddress: bodyWallet } = await request.json()
+        
+        if (!bodyWallet) {
             return NextResponse.json(
-                { error: 'Missing or invalid authorization header' },
-                { status: 401 }
+                { error: 'Wallet address is required' },
+                { status: 400 }
             )
         }
 
-        // Verify JWT token
-        const token = authHeader.slice(7)
-        const { walletAddress, userId, valid } = verifyJWT(token)
-        if (!valid) {
-            return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
+        // If no token but wallet provided, use demo mode
+        if (!walletAddress) {
+            walletAddress = bodyWallet
         }
 
-        const { walletAddress: bodyWallet } = await request.json()
-
-        // Verify requesting user matches token
-        if (bodyWallet && bodyWallet !== walletAddress) {
+        // Verify requesting user matches token (if authenticated)
+        if (authHeader && walletAddress !== bodyWallet) {
             return NextResponse.json(
                 { error: 'Cannot sync trades for a different wallet' },
                 { status: 403 }
@@ -87,34 +99,44 @@ export async function POST(request: Request) {
             // Continue anyway; we have trades to return
         }
 
-        // Step 4: Ensure user exists in database
-        await getUserByWallet(walletAddress).then(user => {
-            if (!user) {
-                return getUserByWallet(walletAddress).then(u => {
-                    if (!u) {
-                        return saveUserTrades(walletAddress, [])
-                    }
-                })
-            }
-        })
+        // Step 4: Ensure user exists in database (optional for demo)
+        try {
+            await getUserByWallet(walletAddress).then(user => {
+                if (!user) {
+                    return getUserByWallet(walletAddress).then(u => {
+                        if (!u) {
+                            return saveUserTrades(walletAddress, [])
+                        }
+                    })
+                }
+            })
+        } catch (dbError) {
+            console.warn('Database user creation failed (demo mode OK):', dbError)
+            // Continue anyway - demo mode
+        }
 
         // Step 5: Save trades to database
         if (trades.length > 0) {
             try {
                 await saveUserTrades(walletAddress, trades as Trade[])
             } catch (dbError) {
-                console.error('Error saving trades to database:', dbError)
+                console.warn('Error saving trades to database (demo mode OK):', dbError)
                 // Continue even if DB save fails - return trades anyway
             }
         }
 
-        // Step 6: Update sync status to completed
-        await updateSyncStatus(walletAddress, 'ready', {
-            trades_parsed: trades.length,
-            transactions_scanned: syncMetadata.signaturesScanned,
-            last_synced_at: new Date().toISOString(),
-            data_source: syncMetadata.dataSource,
-        })
+        // Step 6: Update sync status to completed (optional for demo)
+        try {
+            await updateSyncStatus(walletAddress, 'ready', {
+                trades_parsed: trades.length,
+                transactions_scanned: syncMetadata.signaturesScanned,
+                last_synced_at: new Date().toISOString(),
+                data_source: syncMetadata.dataSource,
+            })
+        } catch (statusError) {
+            console.warn('Could not update sync status (demo mode OK):', statusError)
+            // Continue anyway - still return trades
+        }
 
         return NextResponse.json({
             success: true,
