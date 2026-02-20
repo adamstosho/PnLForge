@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+  <title>PnlForge</title>
+  <g transform="translate(3, 1)">
+    <path fill="#05607f" transform="translate(2.2, -1.1)" d="M6 6h4v2a8 8 0 0 1 12 8 8 8 0 0 1-12 8v2H6V6z"/>
+    <path fill="#0aaadf" d="M6 6h4v2a8 8 0 0 1 12 8 8 8 0 0 1-12 8v2H6V6z"/>
+  </g>
+</svg>

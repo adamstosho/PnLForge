@@ -1,0 +1,12 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>PnlForge Icon</title>
+  <!-- Outer Geometric Frame -->
+  <path d="M16 4L28 16L16 28L4 16L16 4Z" stroke="#7B5CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Central Alpha Spark -->
+  <path d="M16 11L21 16L16 21L11 16L16 11Z" fill="#0AAADF"/>
+  <!-- Spark Accents -->
+  <line x1="16" y1="13" x2="16" y2="10" stroke="#0AAADF" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="16" y1="19" x2="16" y2="22" stroke="#0AAADF" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="13" y1="16" x2="10" y2="16" stroke="#0AAADF" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="19" y1="16" x2="22" y2="16" stroke="#0AAADF" stroke-width="1.5" stroke-linecap="round"/>
+</svg>
