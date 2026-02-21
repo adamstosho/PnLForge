@@ -26,6 +26,23 @@ In the volatile landscape of 2026 DeFi, performance is nothing without **auditab
 
 ---
 
+## 🎯 Why PnlForge for Deriverse Traders?
+
+**Deriverse** offers the industry's first fully on-chain ecosystem for Spot, Perpetual Futures, and Options with zero compromise on decentralization. PnlForge is the analytics layer that Deriverse traders need:
+
+| Deriverse Feature | PnL Forge Solution |
+|---|---|
+| **Spot Trading** + **Perpetual Futures** | Unified analytics across all market types |
+| **Up to 10x Leverage** | Max drawdown, liquidation risk, margin monitoring |
+| **Funding Rates** (Perpetuals) | Automatic funding impact analysis |
+| **Maker/Taker Fees** | Real-time fee decomposition |
+| **Complex Multi-Market Strategies** | Scenario simulator for "what-if" testing |
+| **No native trader analytics** | 20+ professional-grade metrics |
+
+**Result:** Understand your true risk-adjusted performance on Deriverse with AI-powered insights and scenario testing.
+
+---
+
 ## ✨ Key Features
 
 ### 💎 Professional Analytics
@@ -33,6 +50,12 @@ In the volatile landscape of 2026 DeFi, performance is nothing without **auditab
 - **Equity Curves with Drawdown Analysis** - Precision visualizations of your performance
 - **Fee Decomposition** - Understand maker vs. taker impact
 - **Time-Based Performance Heatmaps** - See when you trade best
+
+### 🎯 Deriverse-Specific Insights
+- **Leverage Risk Metrics** - Monitor max drawdown and liquidation risk for leveraged positions
+- **Funding Rate Analysis** - Track perpetual futures funding impact on profitability
+- **Margin Efficiency** - Analyze performance across spot, perpetual, and future markets
+- **Multi-Market Performance** - Compare metrics across Deriverse spot, perps, and derivatives
 
 ### 📓 Quantified Trading Journal
 - **Encrypted Global Notes** - Professional-grade encryption for your trade notes
